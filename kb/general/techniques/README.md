@@ -1,8 +1,8 @@
 # 通用逆向技术库
 
-跨平台逆向技术库。覆盖密码算法、协议、研究型对抗与方法论。
+跨平台逆向技术库。覆盖密码算法、协议、研究型对抗与方法论、Linux 内核漏洞。
 
-## 完整目录（4 类 / 12 篇）
+## 完整目录（5 类 / 17 篇）
 
 ### cheating — 游戏与对抗研究（5）
 
@@ -27,6 +27,14 @@
 
 - [`protocol/01-unknown-protocol-reverse.md`](protocol/01-unknown-protocol-reverse.md) — 未知协议逆向方法论
 - [`protocol/02-protobuf-flatbuffers-reverse.md`](protocol/02-protobuf-flatbuffers-reverse.md) — Protobuf / FlatBuffers 无 Schema 逆向
+
+### kernel — Linux 内核漏洞（5）
+
+- [`kernel/01-page-cache-write-family.md`](kernel/01-page-cache-write-family.md) — Page-Cache 写入家族：Copy Fail / Dirty Frag / Fragnesia
+- [`kernel/02-slab-cross-cache.md`](kernel/02-slab-cross-cache.md) — Slab 跨缓存释放（CVE-2026-31429）
+- [`kernel/03-mm-null-ptrace-bypass.md`](kernel/03-mm-null-ptrace-bypass.md) — mm-NULL ptrace check bypass / FD theft（CVE-2026-46333）
+- [`kernel/04-cifswitch-nss-privesc.md`](kernel/04-cifswitch-nss-privesc.md) — CIFSwitch cifs.spnego 身份混淆（QVD-2026-29453）
+- [`kernel/05-pintheft-io-uring-page-cache.md`](kernel/05-pintheft-io-uring-page-cache.md) — PinTheft: RDS zcopy double-free + io_uring 页缓存写入（QVD-2026-27616）
 
 ## 文档质量基线
 

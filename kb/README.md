@@ -4,9 +4,9 @@ AI 使用说明：[AI-USAGE.md](AI-USAGE.md)
 
 Reusable knowledge lives here. Unlike `notes/`, this is not per-case evidence; it is a tactical reference library.
 
-| Area | Path |
-|---|---|
-| Web CTF | [ctf-website](ctf-website/README.md) |
-| APK Reverse | [apk-reverse](apk-reverse/README.md) |
-| PE Reverse | [pe-reverse](pe-reverse/README.md) |
-| General | [general](general/README.md) |
+| Area | Path | Content |
+|---|---|---|
+| Web CTF | [ctf-website](ctf-website/README.md) | 25 类 112 篇 — Web 攻击全表面 + CVE 实战 + DoS |
+| APK Reverse | [apk-reverse](apk-reverse/README.md) | 8 类 17 篇 — APK/DEX 逆向 |
+| PE Reverse | [pe-reverse](pe-reverse/README.md) | Windows 本地代码执行 + PE 分析 |
+| General | [general](general/README.md) | 5 类 17 篇 — 密码学/协议/内核漏洞/方法论 |

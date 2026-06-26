@@ -1408,6 +1408,234 @@
         "24-database/README.md"
       ],
       "priority": 10
+    },
+    {
+      "id": "chrome-uaf-blink",
+      "signals": [
+        "chrome",
+        "blink",
+        "cssfontfeaturevalues",
+        "uaf",
+        "use after free",
+        "chromium",
+        "hashmap rehash",
+        "renderer sandbox",
+        "CVE-2026-2441"
+      ],
+      "files": [
+        "09-cve/01-browser-sandbox-escape.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "redis-valkey-restore-zipmap",
+      "signals": [
+        "redis",
+        "valkey",
+        "restore",
+        "zipmap",
+        "rdb",
+        "serialized value",
+        "heap buffer overflow",
+        "CVE-2026-25243"
+      ],
+      "files": [
+        "09-cve/02-redis-zipmap-rce.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "valkey-resp-dos",
+      "signals": [
+        "valkey",
+        "resp",
+        "pipeline",
+        "multibulk",
+        "pre-auth dos",
+        "assertion failure",
+        "networking.c",
+        "CVE-2026-27623"
+      ],
+      "files": [
+        "11-dos/01-valkey-resp-dos.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "cpanel-caldav-traversal",
+      "signals": [
+        "cpanel",
+        "whm",
+        "caldav",
+        "cpdavd",
+        "path traversal",
+        "maildir",
+        "plus alias",
+        "CVE-2026-29205"
+      ],
+      "files": [
+        "09-cve/03-cpanel-caldav-traversal.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "nginx-rewrite-heapoverflow",
+      "signals": [
+        "nginx",
+        "rewrite",
+        "set",
+        "heap overflow",
+        "buffer overflow",
+        "capture group",
+        "ngx_http_rewrite_module",
+        "CVE-2026-42945"
+      ],
+      "files": [
+        "09-cve/06-nginx-rewrite-heapoverflow.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "nezha-path-traversal",
+      "signals": [
+        "nezha",
+        "哪吒",
+        "dashboard",
+        "monitoring",
+        "path traversal",
+        "jwt secret",
+        "fallbackToFrontend",
+        "CVE-2026-53519"
+      ],
+      "files": [
+        "09-cve/04-nezha-path-traversal-jwt.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "litellm-privesc",
+      "signals": [
+        "litellm",
+        "api key",
+        "key/generate",
+        "user/update",
+        "proxy_admin",
+        "internal_user",
+        "privilege escalation",
+        "allowed_routes",
+        "CVE-2026-47101"
+      ],
+      "files": [
+        "09-cve/05-litellm-privesc.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "notepadpp-config-injection",
+      "signals": [
+        "notepad++",
+        "notepad plus plus",
+        "config.xml",
+        "commandLineInterpreter",
+        "ShellExecute",
+        "配置注入",
+        "CVE-2026-48778"
+      ],
+      "files": [
+        "../../windows/techniques/notepadpp-config-injection.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "page-cache-write",
+      "signals": [
+        "page cache",
+        "copy fail",
+        "dirty frag",
+        "fragnesia",
+        "dirtydecrypt",
+        "splice",
+        "vmsplice",
+        "in-place decrypt",
+        "authencesn",
+        "CVE-2026-31431",
+        "CVE-2026-43284",
+        "CVE-2026-43500",
+        "CVE-2026-46300",
+        "CVE-2026-31635"
+      ],
+      "files": [
+        "../../general/techniques/01-kernel/01-page-cache-write-family.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "slab-cross-cache",
+      "signals": [
+        "slab",
+        "kfence",
+        "skb_small_head_cache",
+        "cross cache",
+        "kmem_cache_free",
+        "warn_free_bad_obj",
+        "CVE-2026-31429"
+      ],
+      "files": [
+        "../../general/techniques/01-kernel/02-slab-cross-cache.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "fd-theft-pidfd",
+      "signals": [
+        "pidfd",
+        "pidfd_getfd",
+        "fd theft",
+        "keysign",
+        "ssh keysign",
+        "chage",
+        "mm-null",
+        "ptrace",
+        "CVE-2026-46333"
+      ],
+      "files": [
+        "../../general/techniques/01-kernel/03-mm-null-ptrace-bypass.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "cifswitch-nss",
+      "signals": [
+        "cifs",
+        "cifs.upcall",
+        "spnego",
+        "nss",
+        "name service switch",
+        "request-key",
+        "cifswitch",
+        "QVD-2026-29453"
+      ],
+      "files": [
+        "../../general/techniques/01-kernel/04-cifswitch-nss-privesc.md"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "pintheft-io-uring",
+      "signals": [
+        "rds",
+        "io_uring",
+        "pin count",
+        "FOLL_PIN",
+        "zerocopy",
+        "double free",
+        "dangling pointer",
+        "QVD-2026-27616"
+      ],
+      "files": [
+        "../../general/techniques/01-kernel/05-pintheft-io-uring-page-cache.md"
+      ],
+      "priority": 10
     }
   ]
 }
